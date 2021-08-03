@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
-import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import {
-  selectedProduct,
   removeSelectedProduct,
+  fetchSelectData,
 } from '../redux/actions/productActions'
 
 const ProductDetails = () => {
@@ -12,20 +11,10 @@ const ProductDetails = () => {
   console.log('product detail ka data ye aya', productData)
   const dispatch = useDispatch()
   const { productId } = useParams()
-  console.log('parama ye raha', productId)
-
-  const productDetail = async () => {
-    const response = await axios
-      .get(`https://fakestoreapi.com/products/${productId}`)
-      .catch(error => {
-        console.log('individual product details', error)
-      })
-    dispatch(selectedProduct(response.data))
-  }
+  console.log('params ye raha', productId)
 
   useEffect(() => {
-    if (productId && productId !== '') productDetail()
-
+    if (productId && productId !== '') dispatch(fetchSelectData(productId))
     return () => {
       dispatch(removeSelectedProduct())
     }
@@ -55,7 +44,7 @@ const ProductDetails = () => {
                 <h5 className="card-title">{productData.title}</h5>
                 <p className="card-text">{productData.description}</p>
                 <p className="card-text">
-                  <small className="text-muted">{productData.price}</small>
+                  <small className="text-muted">$ {productData.price}</small>
                 </p>
                 <p className="card-text">{productData.category}</p>
                 <Link to="/" className="btn btn-danger">

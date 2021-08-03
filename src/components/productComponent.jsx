@@ -15,6 +15,7 @@ const ProductComponent = ({ productList }) => {
               height="250px"
               width="250px"
               alt={title}
+              style={{ padding: '20px' }}
             />
             <div className="card-body">
               <h6 className="card-title mb-2">{title}</h6>
